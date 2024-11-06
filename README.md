@@ -69,10 +69,10 @@ int main()
 {
     std::cout << "Start" << std::endl;
     {
-        Singleton<Manager>::CreateInstance(10);
-        Singleton<Manager>::GetInstance().PrintValue();
-        // Singleton<Manager>::UnlockInstance();
-        Singleton<Manager>::DestroyInstance();
+        Manager::CreateInstance(10);
+        Manager::GetInstance().PrintValue();
+        // Manager::UnlockInstance();
+        Manager::DestroyInstance();
     }
     std::cout << "End" << std::endl;
     return 0;

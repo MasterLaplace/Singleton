@@ -31,11 +31,11 @@
 #include <cassert>
 
 #ifndef SINGLETON_NO_THREAD_SAFETY
-#define SINGLETON_THREAD_SAFE(_) _ NEED_COMMA
+#define SINGLETON_THREAD_SAFE(_) _
 
 #include <mutex>
 #else
-#define SINGLETON_THREAD_SAFE(_) NEED_COMMA
+#define SINGLETON_THREAD_SAFE(_)
 #endif /* !SINGLETON_NO_THREAD_SAFETY */
 
 /**
