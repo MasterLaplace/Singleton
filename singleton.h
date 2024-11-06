@@ -1,5 +1,5 @@
 /**************************************************************************
- * Singleton v1.0.0
+ * Singleton v1.0.1
  *
  * Singleton is a C/CPP library for creating portable singleton objects.
  * It is designed to be easy to use and easy to integrate into your project
@@ -17,7 +17,7 @@
  * @brief A thread-safe interface for singleton pattern implementation.
  *
  * @author @MasterLaplace
- * @version 1.0.0
+ * @version 1.0.1
  * @date 2024-11-06
  **************************************************************************/
 

@@ -19,7 +19,7 @@ INCLUDE(FetchContent)
 FetchContent_Declare(
     Singleton
     GIT_REPOSITORY https://github.com/MasterLaplace/Singleton.git
-    GIT_TAG v1.0.0
+    GIT_TAG v1.0.1
 )
 
 FetchContent_MakeAvailable(Singleton)
