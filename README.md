@@ -8,7 +8,7 @@ This library need to be included in your project as a submodule. To do this, you
 can run the following command:
 
 ```sh
-git submodule add https://github.com/MasterLaplac   e/Singleton.git
+git submodule add https://github.com/MasterLaplace/Singleton.git
 ```
 
 This Library provides two files, `Singleton.hpp` and `singleton.h`. To use it,
