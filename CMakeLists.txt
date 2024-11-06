@@ -19,10 +19,6 @@ else()
     )
 endif()
 
-add_library(singleton_lib STATIC ${HEADERS})
-target_include_directories(singleton_lib PUBLIC "${PROJECT_SOURCE_DIR}")
-
-if (MAIN_PROJECT)
-    install(TARGETS singleton_lib DESTINATION lib)
-    install(FILES ${HEADERS} DESTINATION include)
-endif()
+install(FILES ${HEADERS} DESTINATION include)
+add_library(Singleton INTERFACE)
+target_include_directories(Singleton INTERFACE ${CMAKE_CURRENT_SOURCE_DIR})
