@@ -56,6 +56,7 @@ int main()
     {
         Singleton<Manager>::CreateInstance(10);
         Singleton<Manager>::GetInstance().PrintValue();
+        // Singleton<Manager>::UnlockInstance();
         Singleton<Manager>::DestroyInstance();
     }
     std::cout << "End" << std::endl;
@@ -64,3 +65,61 @@ int main()
 ```
 
 #### singleton.h (C)
+
+```c
+#define SINGLETON_NO_THREAD_SAFETY
+#define SINGLETON_IMPLEMENTATION
+#include "Singleton/singleton.h"
+
+typedef struct {
+    int _value;
+} manager_t;
+
+void *manager_create(va_list args)
+{
+    manager_t *manager = malloc(sizeof(manager_t));
+
+    if (!manager)
+        return nullptr;
+
+    manager->_value = va_arg(args, int);
+    return manager;
+}
+
+void manager_SetValue(singleton_t *instance, int value)
+{
+    ((manager_t *)instance->data)->_value = value;
+}
+
+int manager_GetValue(singleton_t *instance)
+{
+    manager_t *manager = (manager_t *)instance->data;
+
+    return manager->_value;
+}
+
+void manager_print_value(singleton_t *instance)
+{
+    manager_t *manager = (manager_t *)instance->data;
+
+    printf("Value: %d\n", manager->_value);
+}
+
+void manager_destroy(void *data)
+{
+    free((manager_t *)data);
+}
+
+int main()
+{
+    printf("Start\n");
+    {
+        instance_create(&manager_create, &manager_destroy, 10);
+        manager_print_value(instance_get());
+        // instance_unlock();
+        instance_destroy();
+    }
+    printf("End\n");
+    return 0;
+}
+```
