@@ -22,8 +22,8 @@
  **************************************************************************/
 
 // clang-format off
-#ifndef CONFIG_H_
-    #define CONFIG_H_
+#ifndef SINGLETON_CONFIG_H_
+    #define SINGLETON_CONFIG_H_
 
 #ifdef __cplusplus
     #include <utility>
@@ -36,8 +36,77 @@
     #include <stdint.h>
 #endif
 
-#ifndef DISTRIBUTION_H_
-    #define DISTRIBUTION_H_
+
+#ifndef CONFIG_UTILS
+    #define CONFIG_UTILS
+
+////////////////////////////////////////////////////////////
+// Define shared portable macros for various compilers
+////////////////////////////////////////////////////////////
+#define NEED_COMMA struct _
+#define ATTRIBUTE(key) __attribute__((key))
+#define UNUSED_ATTRIBUTE ATTRIBUTE(unused)
+#define UNUSED(x) (void)(x)
+
+////////////////////////////////////////////////////////////
+// Define portable NULL pointer using C++11 nullptr keyword
+////////////////////////////////////////////////////////////
+#ifdef __cplusplus && __cplusplus >= 201103L
+#elif !defined(NULL)
+    #define nullptr ((void*)0)
+#else
+    #define nullptr NULL
+#endif
+
+////////////////////////////////////////////////////////////
+// Define boolean type and values
+////////////////////////////////////////////////////////////
+#if defined(__cplusplus)
+#elif !defined(__bool_true_false_are_defined)
+    #define bool _Bool
+    #define true 1
+    #define false 0
+    #define __bool_true_false_are_defined 1
+#endif
+
+#if defined __GNUC__ && defined __GNUC_MINOR__
+# define __GNUC_PREREQ(maj, min) \
+    ((__GNUC__ << 16) + __GNUC_MINOR__ >= ((maj) << 16) + (min))
+#else
+# define __GNUC_PREREQ(maj, min) 0
+#endif
+
+////////////////////////////////////////////////////////////
+// Define a portable way for packing structures
+////////////////////////////////////////////////////////////
+/** Usage:
+ * @example
+ * PACKED(struct MyStruct
+ * {
+ *     int a;
+ *     char b;
+ *     ...
+ * });
+\**********************************************************/
+#if defined(__GNUC__) || defined(__GNUG__)
+    #define PACKED( __Declaration__ ) __Declaration__ __attribute__((__packed__))
+#elif _MSC_VER
+    #define PACKED( __Declaration__ ) __pragma(pack(push, 1)) __Declaration__ __pragma(pack(pop))
+#else
+    #define PACKED( __Declaration__ ) __Declaration__
+#endif
+
+////////////////////////////////////////////////////////////
+// Helper macro to convert a macro to a string
+////////////////////////////////////////////////////////////
+#define STRINGIFY(x) #x
+#define TOSTRING(x) STRINGIFY(x)
+
+#endif /* !CONFIG_UTILS */
+
+
+#ifndef SINGLETON_DISTRIBUTION_H_
+    #define SINGLETON_DISTRIBUTION_H_
 
 ////////////////////////////////////////////////////////////
 // Identify the Compiler
@@ -243,27 +312,6 @@
 #endif
 
 ////////////////////////////////////////////////////////////
-// Define portable NULL pointer using C++11 nullptr keyword
-////////////////////////////////////////////////////////////
-#ifdef __cplusplus
-#elif !defined(NULL)
-    #define nullptr ((void*)0)
-#else
-    #define nullptr NULL
-#endif
-
-////////////////////////////////////////////////////////////
-// Define boolean type and values
-////////////////////////////////////////////////////////////
-#if defined(__cplusplus)
-#elif !defined(__bool_true_false_are_defined)
-    #define bool _Bool
-    #define true 1
-    #define false 0
-    #define __bool_true_false_are_defined 1
-#endif
-
-////////////////////////////////////////////////////////////
 // Define a portable debug macro
 ////////////////////////////////////////////////////////////
 #if (defined(_DEBUG) || defined(DEBUG)) && !defined(NDEBUG)
@@ -273,14 +321,6 @@
 
 #else
     #define SINGLETON_DEBUG_STRING "Release"
-#endif
-
-
-#if defined __GNUC__ && defined __GNUC_MINOR__
-# define __GNUC_PREREQ(maj, min) \
-    ((__GNUC__ << 16) + __GNUC_MINOR__ >= ((maj) << 16) + (min))
-#else
-# define __GNUC_PREREQ(maj, min) 0
 #endif
 
 ////////////////////////////////////////////////////////////
@@ -375,40 +415,11 @@
     #define SINGLETON_DEPRECATED_VMSG(version, message)
 #endif
 
-
-////////////////////////////////////////////////////////////
-// Define a portable way for packing structures
-////////////////////////////////////////////////////////////
-/** Usage:
- * @example
- * PACKED(struct MyStruct
- * {
- *     int a;
- *     char b;
- *     ...
- * });
-\**********************************************************/
-#if defined(__GNUC__) || defined(__GNUG__)
-    #define PACKED( __Declaration__ ) __Declaration__ __attribute__((__packed__))
-#elif _MSC_VER
-    #define PACKED( __Declaration__ ) __pragma(pack(push, 1)) __Declaration__ __pragma(pack(pop))
-#else
-    #define PACKED( __Declaration__ ) __Declaration__
-#endif
-
-////////////////////////////////////////////////////////////
-// Define other portable macros for various compilers
-////////////////////////////////////////////////////////////
-#define NEED_COMMA struct _
-#define ATTRIBUTE(key) __attribute__((key))
-#define UNUSED_ATTRIBUTE ATTRIBUTE(unused)
-#define UNUSED(x) (void)(x)
-
-#endif /* !DISTRIBUTION_H_ */
+#endif /* !SINGLETON_DISTRIBUTION_H_ */
 
 
-#ifndef VERSION_H_
-    #define VERSION_H_
+#ifndef SINGLETON_VERSION_H_
+    #define SINGLETON_VERSION_H_
 
 ////////////////////////////////////////////////////////////
 // Define the SINGLETON version
@@ -457,17 +468,13 @@
 ////////////////////////////////////////////////////////////
 // Define the SINGLETON version string
 ////////////////////////////////////////////////////////////
-// Helper macro to convert a macro to a string
-#define STRINGIFY(x) #x
-#define TOSTRING(x) STRINGIFY(x)
-
 #define SINGLETON_VERSION_STRING \
         TOSTRING(SINGLETON_VERSION_MAJOR) "." \
         TOSTRING(SINGLETON_VERSION_MINOR) "." \
         TOSTRING(SINGLETON_VERSION_PATCH) "." \
         TOSTRING(SINGLETON_VERSION_TWEAK)
 
-#endif /* !VERSION_H_ */
+#endif /* !SINGLETON_VERSION_H_ */
 
 
 ////////////////////////////////////////////////////////////
@@ -479,5 +486,5 @@
         "SINGLETON_COMPILER=" SINGLETON_COMPILER_STRING "\n" \
         "SINGLETON_DEBUG=" SINGLETON_DEBUG_STRING "\n"
 
-#endif /* !CONFIG_H_ */
+#endif /* !SINGLETON_CONFIG_H_ */
 // clang-format on
