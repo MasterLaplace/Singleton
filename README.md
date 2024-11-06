@@ -4,11 +4,26 @@ My own implementation of a portable singleton in C/CPP following the stb style.
 
 ## Usage
 
-This library need to be included in your project as a submodule. To do this, you
-can run the following command:
+This library is designed to be used as a submodule in your project. To do this,
+you can run the following command:
 
 ```sh
 git submodule add https://github.com/MasterLaplace/Singleton.git
+```
+
+Or you can add it as a dependency in your `CMakeLists.txt` file:
+
+```cmake
+INCLUDE(FetchContent)
+
+FetchContent_Declare(
+    Singleton
+    GIT_REPOSITORY https://github.com/MasterLaplace/Singleton.git
+    GIT_TAG main
+)
+
+FetchContent_MakeAvailable(Singleton)
+target_include_directories(target PRIVATE ${singleton_SOURCE_DIR})
 ```
 
 This Library provides two files, `Singleton.hpp` and `singleton.h`. To use it,
