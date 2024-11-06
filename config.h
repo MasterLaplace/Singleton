@@ -1,5 +1,5 @@
 /**************************************************************************
- * Singleton v0.0.0
+ * Singleton v1.0.0
  *
  * Singleton is a C/CPP library for creating portable singleton objects.
  * It is designed to be easy to use and easy to integrate into your project
@@ -17,7 +17,7 @@
  * @brief Compile-Time Configuration Parameters for Singleton.
  *
  * @author @MasterLaplace
- * @version 0.0.0
+ * @version 1.0.0
  * @date 2024-11-06
  **************************************************************************/
 
@@ -416,7 +416,7 @@
 #ifdef FLAG_VERSION_MAJOR
     #define SINGLETON_VERSION_MAJOR FLAG_VERSION_MAJOR
 #else
-    #define SINGLETON_VERSION_MAJOR 0
+    #define SINGLETON_VERSION_MAJOR 1
 #endif
 
 #ifdef FLAG_VERSION_MINOR
