@@ -13,7 +13,7 @@
  * it under the terms of the Anti-NN License as published by MasterLaplace.
  * See the Anti-NN License for more details.
  *
- * @file config.h
+ * @file singleton_config.h
  * @brief Compile-Time Configuration Parameters for Singleton.
  *
  * @author @MasterLaplace

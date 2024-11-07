@@ -25,7 +25,7 @@
 #ifndef SINGLETON_HPP_
 #define SINGLETON_HPP_
 
-#include "config.h"
+#include "singleton_config.h"
 
 #include <iostream>
 #include <cassert>

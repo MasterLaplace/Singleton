@@ -25,7 +25,7 @@
 #ifndef SINGLETON_H_
 #define SINGLETON_H_
 
-#include "config.h"
+#include "singleton_config.h"
 
 #include <stdio.h>
 #include <assert.h>
