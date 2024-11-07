@@ -51,7 +51,7 @@
 ////////////////////////////////////////////////////////////
 // Define portable NULL pointer using C++11 nullptr keyword
 ////////////////////////////////////////////////////////////
-#ifdef __cplusplus && __cplusplus >= 201103L
+#if defined(__cplusplus) && __cplusplus >= 201103L
 #elif !defined(NULL)
     #define nullptr ((void*)0)
 #else
@@ -69,7 +69,7 @@
     #define __bool_true_false_are_defined 1
 #endif
 
-#if defined __GNUC__ && defined __GNUC_MINOR__
+#if defined(__GNUC__) && defined(__GNUC_MINOR__)
 # define __GNUC_PREREQ(maj, min) \
     ((__GNUC__ << 16) + __GNUC_MINOR__ >= ((maj) << 16) + (min))
 #else
@@ -90,10 +90,16 @@
 \**********************************************************/
 #if defined(__GNUC__) || defined(__GNUG__)
     #define PACKED( __Declaration__ ) __Declaration__ __attribute__((__packed__))
+    #define PACKED_START _Pragma("pack(1)")
+    #define PACKED_END   _Pragma("pack()")
 #elif _MSC_VER
     #define PACKED( __Declaration__ ) __pragma(pack(push, 1)) __Declaration__ __pragma(pack(pop))
+    #define PACKED_START __pragma(pack(push, 1))
+    #define PACKED_END   __pragma(pack(pop))
 #else
     #define PACKED( __Declaration__ ) __Declaration__
+    #define PACKED_START _Pragma("pack(1)")
+    #define PACKED_END   _Pragma("pack()")
 #endif
 
 ////////////////////////////////////////////////////////////
