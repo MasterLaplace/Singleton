@@ -149,7 +149,7 @@ class Singleton {
         /**
          * @brief Pointer to the Singleton instance.
          */
-        static SINGLETON_CPP17(inline) T *_instance SINGLETON_CPP17(= nullptr);
+        static SINGLETON_CPP17(inline) T *_instance SINGLETON_CPP17(= lpl_nullptr);
 
 #ifndef SINGLETON_NO_THREAD_SAFETY
         /**
@@ -229,7 +229,7 @@ inline void Singleton<T>::DestroyInstance()
     SINGLETON_THREAD_SAFE(std::lock_guard<std::mutex> lock(_mutex));
 
     delete _instance;
-    _instance = nullptr;
+    _instance = lpl_nullptr;
 }
 
 #endif /* !SINGLETON_CPP_ONCE */

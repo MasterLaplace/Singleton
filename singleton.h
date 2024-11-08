@@ -105,11 +105,11 @@ extern inline void instance_destroy();
 ////////////////////////////////////////////////////////////////////////////////
 /*                               IMPLEMENTATION                               */
 ////////////////////////////////////////////////////////////////////////////////
-#ifdef SINGLETON_IMPLEMENTATION
+#ifdef SINGLETON_H_IMPLEMENTATION
 #ifndef SINGLETON_C_ONCE
     #define SINGLETON_C_ONCE
 
-static singleton_t *instance = nullptr;
+static singleton_t *instance = lpl_nullptr;
 
 #ifndef SINGLETON_NO_THREAD_SAFETY
 static pthread_mutex_t mutex = PTHREAD_MUTEX_INITIALIZER;
@@ -133,7 +133,7 @@ inline void instance_create(void *(*create)(va_list args), void (*destroy)(void 
     if (!instance->data)
     {
         free(instance);
-        instance = NULL;
+        instance = lpl_nullptr;
     }
 
     SINGLETON_THREAD_SAFE(pthread_mutex_unlock(&mutex));
@@ -163,11 +163,11 @@ inline void instance_destroy()
 
     instance->destroy(instance->data);
     free(instance);
-    instance = NULL;
+    instance = lpl_nullptr;
 
     SINGLETON_THREAD_SAFE(pthread_mutex_unlock(&mutex));
 }
 
 #endif /* !SINGLETON_C_ONCE */
-#endif /* SINGLETON_IMPLEMENTATION */
+#endif /* SINGLETON_H_IMPLEMENTATION */
 // clang-format on

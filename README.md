@@ -83,7 +83,7 @@ int main()
 
 ```c
 #define SINGLETON_NO_THREAD_SAFETY
-#define SINGLETON_IMPLEMENTATION
+#define SINGLETON_H_IMPLEMENTATION
 #include "Singleton/singleton.h"
 
 typedef struct {
