@@ -9,12 +9,12 @@ set(MAIN_PROJECT OFF)
 
 if (CMAKE_C_COMPILER)
     set(HEADERS
-        config.h
+        singleton_config.h
         singleton.h
     )
 else()
     set(HEADERS
-        config.h
+        singleton_config.h
         Singleton.hpp
     )
 endif()
