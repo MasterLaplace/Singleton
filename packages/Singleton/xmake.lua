@@ -1,4 +1,4 @@
-package("Singleton")
+package("singleton")
     set_kind("library", {headeronly = true})
     set_homepage("https://github.com/MasterLaplace/Singleton")
     set_description("Implementation of a portable singleton in C/CPP following the stb style")
@@ -14,4 +14,8 @@ package("Singleton")
         table.insert(configs, "-DCMAKE_BUILD_TYPE=" .. (package:is_debug() and "Debug" or "Release"))
 
         import("package.tools.cmake").install(package, configs)
+    end)
+
+    on_test(function (package)
+        assert(package:has_cxxfuncs("CreateInstance", {includes = "Singleton.hpp"}))
     end)
