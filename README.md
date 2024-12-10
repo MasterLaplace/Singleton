@@ -37,6 +37,8 @@ target("target")
     add_packages("Singleton")
 ```
 
+#### Implementation
+
 This Library provides two files, `Singleton.hpp` and `singleton.h`. To use it,
 you need to define `SINGLETON_IMPLEMENTATION` in one of your source files before
 including the header file. This will generate the implementation of the functions
@@ -44,6 +46,10 @@ in the header file.
 
 > [!NOTE]
 > This library is part of the Laplace project, so it is recommended that you use the `#define SINGLETON_STANDALONE` macro, which will deactivate the singleton_config.h file used by the Laplace project to configure the library. It is therefore not necessary to include the `singleton_config.h` file in your project.
+
+#### Thread Safety
+
+This library is designed to be used in a multithreaded environment. By default, the library is thread-safe, but you can disable this feature by defining the `SINGLETON_NO_THREAD_SAFETY` macro before including the header file. This will disable the mutexes used to protect the singleton instance and the UnlockInstance functions at the end of an instance use will no longer be useful.
 
 Here is an example of how to use the library:
 
