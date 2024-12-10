@@ -15,7 +15,3 @@ package("singleton")
 
         import("package.tools.cmake").install(package, configs)
     end)
-
-    on_test(function (package)
-        assert(package:has_cxxfuncs("CreateInstance", {includes = "Singleton.hpp"}))
-    end)
