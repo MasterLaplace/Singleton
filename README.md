@@ -26,6 +26,17 @@ FetchContent_MakeAvailable(Singleton)
 target_include_directories(target PRIVATE ${singleton_SOURCE_DIR})
 ```
 
+Or using xmake package:
+
+```lua
+add_repositories("package_repo https://github.com/MasterLaplace/Singleton.git")
+
+add_requires("Singleton")
+
+target("target")
+    add_packages("Singleton")
+```
+
 This Library provides two files, `Singleton.hpp` and `singleton.h`. To use it,
 you need to define `SINGLETON_IMPLEMENTATION` in one of your source files before
 including the header file. This will generate the implementation of the functions
