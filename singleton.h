@@ -25,7 +25,23 @@
 #ifndef SINGLETON_H_
 #define SINGLETON_H_
 
+#ifndef SINGLETON_STANDALONE
 #include "singleton_config.h"
+
+#else
+#if defined(__cplusplus) && __cplusplus >= 201103L
+    #define lpl_nullptr nullptr
+#elif !defined(NULL)
+    #define lpl_nullptr ((void*)0)
+#else
+    #define lpl_nullptr NULL
+#endif
+
+#if defined(_WIN32) || defined(__WIN32__) || defined(SINGLETON_COMPILER_MINGW) || defined(SINGLETON_COMPILER_CYGWIN)
+#define SINGLETON_SYSTEM_WINDOWS
+#endif
+
+#endif /* !SINGLETON_STANDALONE */
 
 #include <stdio.h>
 #include <assert.h>
@@ -35,7 +51,11 @@
 #ifndef SINGLETON_NO_THREAD_SAFETY
 #define SINGLETON_THREAD_SAFE(_) _
 
+#ifdef SINGLETON_SYSTEM_WINDOWS
+#include <windows.h>
+#else
 #include <pthread.h>
+#endif
 #else
 #define SINGLETON_THREAD_SAFE(_)
 #endif /* !SINGLETON_NO_THREAD_SAFETY */
@@ -112,13 +132,21 @@ extern inline void instance_destroy();
 static singleton_t *instance = lpl_nullptr;
 
 #ifndef SINGLETON_NO_THREAD_SAFETY
+#   ifdef SINGLETON_SYSTEM_WINDOWS
+static HANDLE mutex = NULL;
+#   else
 static pthread_mutex_t mutex = PTHREAD_MUTEX_INITIALIZER;
+#   endif
 #endif /* !SINGLETON_NO_THREAD_SAFETY */
 
 inline void instance_create(void *(*create)(va_list args), void (*destroy)(void *), ...)
 {
     assert(!instance && "singleton_t instance is already created! Use instance_reset() to reset it.");
 
+#ifdef SINGLETON_SYSTEM_WINDOWS && !SINGLETON_NO_THREAD_SAFETY
+    if (mutex == NULL)
+        mutex = CreateMutex(NULL, FALSE, NULL);
+#endif
     SINGLETON_THREAD_SAFE(pthread_mutex_lock(&mutex));
 
     instance = malloc(sizeof(singleton_t));

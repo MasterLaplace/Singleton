@@ -25,7 +25,25 @@
 #ifndef SINGLETON_HPP_
 #define SINGLETON_HPP_
 
+#ifndef SINGLETON_STANDALONE
 #include "singleton_config.h"
+
+#else
+#if defined(__cplusplus) && __cplusplus >= 201103L
+    #define lpl_nullptr nullptr
+#elif !defined(NULL)
+    #define lpl_nullptr ((void*)0)
+#else
+    #define lpl_nullptr NULL
+#endif
+
+#if __cplusplus >= 201703L
+    #define SINGLETON_CPP17(_) _
+#else
+    #define SINGLETON_CPP17(_)
+#endif
+
+#endif /* !SINGLETON_STANDALONE */
 
 #include <iostream>
 #include <cassert>
