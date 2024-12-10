@@ -42,12 +42,16 @@ you need to define `SINGLETON_IMPLEMENTATION` in one of your source files before
 including the header file. This will generate the implementation of the functions
 in the header file.
 
+> [!NOTE]
+> This library is part of the Laplace project, so it is recommended that you use the `#define SINGLETON_STANDALONE` macro, which will deactivate the singleton_config.h file used by the Laplace project to configure the library. It is therefore not necessary to include the `singleton_config.h` file in your project.
+
 Here is an example of how to use the library:
 
 #### Singleton.hpp (C++)
 
 ```cpp
 #define SINGLETON_NO_THREAD_SAFETY
+#define SINGLETON_STANDALONE
 #define SINGLETON_IMPLEMENTATION
 #include "Singleton.hpp"
 
@@ -94,6 +98,7 @@ int main()
 
 ```c
 #define SINGLETON_NO_THREAD_SAFETY
+#define SINGLETON_STANDALONE
 #define SINGLETON_H_IMPLEMENTATION
 #include "Singleton/singleton.h"
 
